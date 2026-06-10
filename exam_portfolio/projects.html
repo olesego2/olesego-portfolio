@@ -1,0 +1,720 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Olesego Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0D0F1A;
+            color: #F0F0FF;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.25s ease, color 0.2s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0D0F1A;
+            border-bottom: 2px solid #3DFFDC;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3DFFDC 0%, #FF44E6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-menu a {
+            color: #F0F0FF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        
+        .nav-menu a:hover {
+            color: #3DFFDC;
+        }
+        
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: #3DFFDC;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        
+        .projects-header {
+            text-align: center;
+            padding: 60px 20px 20px 20px;
+        }
+        
+        h1 {
+            font-size: 52px;
+            color: #3DFFDC;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        
+        .filter-btn {
+            background-color: #1E1F2C;
+            border: 2px solid #FF44E6;
+            color: #F0F0FF;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .filter-btn.active {
+            background-color: #FF44E6;
+            color: #0D0F1A;
+        }
+        
+        .filter-btn:hover {
+            background-color: #FF44E6;
+            color: #0D0F1A;
+            transform: scale(1.02);
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .project-item {
+            background-color: #1E1F2C;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #3DFFDC;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(61, 255, 220, 0.2);
+            border-color: #FF44E6;
+        }
+        
+        /* Image container for each project */
+        .project-img-container {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1c30, #0D0F1A);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .project-item:hover .project-img {
+            transform: scale(1.03);
+        }
+        
+        /* fallback icon if image missing */
+        .img-fallback {
+            font-size: 72px;
+            opacity: 0.7;
+        }
+        
+        .project-info {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-info h3 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            color: #3DFFDC;
+            font-family: monospace;
+        }
+        
+        .project-category {
+            display: inline-block;
+            background-color: #FF44E6;
+            color: #0D0F1A;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 12px 0;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+        
+        .project-info p {
+            line-height: 1.6;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            color: #ccccff;
+        }
+        
+        .view-detail {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            color: #3DFFDC;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 18px;
+            border: 1.5px solid #3DFFDC;
+            border-radius: 40px;
+            transition: all 0.2s;
+            width: fit-content;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .view-detail:hover {
+            background-color: #3DFFDC;
+            color: #0D0F1A;
+            border-color: #3DFFDC;
+            transform: translateX(5px);
+        }
+        
+        /* Modal styles for project detail pages */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 12, 21, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: #1E1F2C;
+            border: 2px solid #3DFFDC;
+            border-radius: 28px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #FF44E6;
+            transition: 0.2s;
+            background: none;
+            border: none;
+            font-weight: bold;
+        }
+        
+        .modal-close:hover {
+            color: #3DFFDC;
+            transform: scale(1.1);
+        }
+        
+        .modal-title {
+            font-size: 32px;
+            color: #3DFFDC;
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        
+        .modal-category {
+            background-color: #FF44E6;
+            color: #0D0F1A;
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            margin: 15px 0 20px;
+        }
+        
+        .modal-description {
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        
+        .modal-image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .modal-image {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid #3DFFDC;
+            background: #0D0F1A;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+        }
+        
+        .gallery-placeholder {
+            background: #2a2c3e;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 16/9;
+            color: #3DFFDC;
+            font-size: 14px;
+            border: 1px dashed #3DFFDC;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #3DFFDC;
+            margin-top: 60px;
+        }
+        
+        .social-links a {
+            color: #3DFFDC;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+        
+        .social-links a:hover {
+            color: #FF44E6;
+        }
+        
+        /* Light mode adjustments */
+        body.light-mode {
+            background-color: #F5F7FF;
+            color: #0A0C18;
+        }
+        body.light-mode nav {
+            background-color: #F5F7FF;
+            border-bottom-color: #FF44E6;
+        }
+        body.light-mode .project-item {
+            background-color: #FFFFFF;
+        }
+        body.light-mode .project-info p {
+            color: #2c2e42;
+        }
+        body.light-mode .modal-content {
+            background-color: #FFFFFF;
+        }
+        body.light-mode .modal-overlay {
+            background-color: rgba(240, 242, 255, 0.95);
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #0D0F1A;
+                padding: 24px;
+                border-bottom: 2px solid #3DFFDC;
+                gap: 18px;
+                z-index: 99;
+            }
+            .nav-menu.show {
+                display: flex;
+            }
+            .menu-button {
+                display: block;
+            }
+            h1 {
+                font-size: 36px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" id="logoHome">OM</div>
+        <div class="nav-menu" id="navMenu">
+            <a href="#" data-page="home">HOME</a>
+            <a href="#" data-page="about">ABOUT</a>
+            <a href="#" data-page="projects" class="active-nav">PROJECTS</a>
+            <a href="#" data-page="contact">CONTACT</a>
+        </div>
+        <button class="menu-button" id="menuBtn">☰</button>
+    </nav>
+
+    <div class="projects-header">
+        <h1>MY WORK</h1>
+        <p style="font-size: 18px;">Game interface design projects — from menus to feedback systems</p>
+    </div>
+
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="game-menus">GAME MENUS & HUBS</button>
+        <button class="filter-btn" data-filter="onboarding">PLAYER ONBOARDING</button>
+        <button class="filter-btn" data-filter="menu-heavy">MENU-HEAVY SYSTEMS</button>
+        <button class="filter-btn" data-filter="interaction">INTERACTION & FEEDBACK</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+        <!-- Project 1: Game Menus and Hub Design -->
+        <div class="project-item" data-category="game-menus">
+            <div class="project-img-container">
+                <img class="project-img" id="projectImg1" src="project.image.1.png" alt="Game Menus and Hub Design" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'img-fallback\'>🎮</div>';">
+            </div>
+            <div class="project-info">
+                <h3>Game Menus & Hub Design</h3>
+                <span class="project-category">GAME MENUS & HUBS</span>
+                <p>Main menu, settings screen, and lobby hub with smooth transitions. Focused on intuitive navigation and visual hierarchy for fighting game genre.</p>
+                <button class="view-detail" data-project="1">CLICK FOR MORE →</button>
+            </div>
+        </div>
+        
+        <!-- Project 2: Player Onboarding -->
+        <div class="project-item" data-category="onboarding">
+            <div class="project-img-container">
+                <img class="project-img" id="projectImg2" src="project.image.2.png" alt="Player Onboarding" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'img-fallback\'>🎯</div>';">
+            </div>
+            <div class="project-info">
+                <h3>Player Onboarding</h3>
+                <span class="project-category">PLAYER ONBOARDING</span>
+                <p>Tutorial flow, interactive tips, and first-time user experience for mobile RPG. Designed to teach mechanics without breaking immersion.</p>
+                <button class="view-detail" data-project="2">CLICK FOR MORE →</button>
+            </div>
+        </div>
+        
+        <!-- Project 3: Menu-Heavy Systems -->
+        <div class="project-item" data-category="menu-heavy">
+            <div class="project-img-container">
+                <img class="project-img" id="projectImg3" src="project.image.3.png" alt="Menu-Heavy Systems" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'img-fallback\'>📋</div>';">
+            </div>
+            <div class="project-info">
+                <h3>Menu-Heavy Systems</h3>
+                <span class="project-category">MENU-HEAVY SYSTEMS</span>
+                <p>Inventory, skill trees, and character customization screens. Designed for deep navigation with clear hierarchy and quick access patterns.</p>
+                <button class="view-detail" data-project="3">CLICK FOR MORE →</button>
+            </div>
+        </div>
+        
+        <!-- Project 4: Interaction & Feedback Systems -->
+        <div class="project-item" data-category="interaction">
+            <div class="project-img-container">
+                <img class="project-img" id="projectImg4" src="project.image.4.png" alt="Interaction & Feedback Systems" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'img-fallback\'>⚡</div>';">
+            </div>
+            <div class="project-info">
+                <h3>Interaction & Feedback Systems</h3>
+                <span class="project-category">INTERACTION & FEEDBACK</span>
+                <p>Button states, haptic response, visual feedback loops, and audio cues. Enhances player satisfaction and system clarity in fast-paced games.</p>
+                <button class="view-detail" data-project="4">CLICK FOR MORE →</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Olesego Marokwane | UI/UX Designer</p>
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+        </div>
+    </footer>
+
+    <!-- Modal for project details (more images) -->
+    <div id="projectModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">✕</button>
+            <div id="modalDynamicContent">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenuEl = document.getElementById('navMenu');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                navMenuEl.classList.toggle('show');
+            });
+        }
+        
+        // Theme toggle (dark/light mode)
+        const themeBtn = document.createElement('button');
+        themeBtn.innerHTML = '🌙';
+        themeBtn.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#1E1F2C;border:2px solid #3DFFDC;border-radius:50%;width:52px;height:52px;font-size:26px;cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;';
+        document.body.appendChild(themeBtn);
+        
+        let darkMode = true;
+        function applyTheme(isDark) {
+            if (!isDark) {
+                document.body.classList.add('light-mode');
+                document.body.style.backgroundColor = '#F5F7FF';
+                document.body.style.color = '#0A0C18';
+                const projectItems = document.querySelectorAll('.project-item');
+                projectItems.forEach(item => item.style.backgroundColor = '#FFFFFF');
+                const modalContent = document.querySelector('.modal-content');
+                if (modalContent) modalContent.style.backgroundColor = '#FFFFFF';
+                themeBtn.innerHTML = '☀️';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.style.backgroundColor = '#0D0F1A';
+                document.body.style.color = '#F0F0FF';
+                const projectItems = document.querySelectorAll('.project-item');
+                projectItems.forEach(item => item.style.backgroundColor = '#1E1F2C');
+                const modalContent = document.querySelector('.modal-content');
+                if (modalContent) modalContent.style.backgroundColor = '#1E1F2C';
+                themeBtn.innerHTML = '🌙';
+            }
+        }
+        
+        themeBtn.addEventListener('click', function() {
+            darkMode = !darkMode;
+            applyTheme(darkMode);
+        });
+        applyTheme(true);
+        
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projects = document.querySelectorAll('.project-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filterValue = this.getAttribute('data-filter');
+                
+                projects.forEach(project => {
+                    if (filterValue === 'all' || project.getAttribute('data-category') === filterValue) {
+                        project.style.display = 'flex';
+                    } else {
+                        project.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Modal and project details (with multiple images per project)
+        const modal = document.getElementById('projectModal');
+        const modalContentDiv = document.getElementById('modalDynamicContent');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        
+        // Project data: each project has title, category, description, and array of additional images
+        const projectsData = {
+            1: {
+                title: "Game Menus & Hub Design",
+                category: "GAME MENUS & HUBS",
+                description: "Full redesign of a fighting game's main menu, character select screen, and post-match hub. Focused on reducing navigation steps and creating an energetic arcade atmosphere. This project includes animated transitions, button states, and responsive layout tests for different resolutions.",
+                images: ["project.detail.1a.png", "project.detail.1b.png", "project.detail.1c.png"],
+                fallbackIcons: ["🏠", "🎮", "🕹️"]
+            },
+            2: {
+                title: "Player Onboarding",
+                category: "PLAYER ONBOARDING",
+                description: "First-time user experience for a mobile RPG. Designed interactive tutorials, tooltip systems, and progressive feature unlocking. The onboarding flow reduces drop-off rates by 25% in playtests, using visual cues and non-intrusive guidance.",
+                images: ["project.detail.2a.png", "project.detail.2b.png", "project.detail.2c.png"],
+                fallbackIcons: ["🎯", "📖", "✨"]
+            },
+            3: {
+                title: "Menu-Heavy Systems",
+                category: "MENU-HEAVY SYSTEMS",
+                description: "Complex inventory and skill tree interface for an open-world game. Designed nested categories, quick-equip slots, and search filters. The system handles over 200 items with smooth scrolling and clear visual grouping. Includes dark/light theme variants.",
+                images: ["project.detail.3a.png", "project.detail.3b.png", "project.detail.3c.png"],
+                fallbackIcons: ["📦", "🗂️", "⚙️"]
+            },
+            4: {
+                title: "Interaction & Feedback Systems",
+                category: "INTERACTION & FEEDBACK",
+                description: "Comprehensive feedback design for button presses, UI sounds, haptic patterns, and visual state changes (hover, active, disabled). This project includes micro-interactions, loading animations, and error message styling that aligns with game lore.",
+                images: ["project.detail.4a.png", "project.detail.4b.png", "project.detail.4c.png"],
+                fallbackIcons: ["⚡", "🔄", "💡"]
+            }
+        };
+        
+        // Helper to open modal with project ID
+        function openProjectDetail(projectId) {
+            const data = projectsData[projectId];
+            if (!data) return;
+            
+            // Build gallery HTML with fallback for missing images
+            let galleryHtml = `<div class="modal-image-gallery">`;
+            data.images.forEach((imgSrc, idx) => {
+                const fallbackIcon = data.fallbackIcons[idx] || "🎨";
+                galleryHtml += `
+                    <div>
+                        <img class="modal-image" src="${imgSrc}" alt="${data.title} screenshot ${idx+1}" 
+                             onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML+='<div class=\'gallery-placeholder\' style=\'aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;\'>${fallbackIcon}<br>Preview ${idx+1}</div>'; this.remove();">
+                    </div>
+                `;
+            });
+            galleryHtml += `</div>`;
+            
+            const modalHtml = `
+                <h2 class="modal-title">${data.title}</h2>
+                <div class="modal-category">${data.category}</div>
+                <p class="modal-description">${data.description}</p>
+                <h3 style="color:#3DFFDC; margin: 20px 0 10px 0;">Project Gallery</h3>
+                ${galleryHtml}
+                <p style="margin-top: 20px; font-size: 14px; opacity:0.8;">More images coming soon — full case study available on request.</p>
+            `;
+            modalContentDiv.innerHTML = modalHtml;
+            modal.classList.add('active');
+        }
+        
+        // Attach event listeners to all "CLICK FOR MORE" buttons
+        const detailButtons = document.querySelectorAll('.view-detail');
+        detailButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const projectId = this.getAttribute('data-project');
+                if (projectId) {
+                    openProjectDetail(projectId);
+                }
+            });
+        });
+        
+        // Close modal when clicking close button or overlay background
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+        
+        // Simple navigation to other pages for consistency (home, about, contact)
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        // Since we are on projects page standalone, we simulate redirection behavior (but we keep the same file)
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const page = link.textContent.trim().toLowerCase();
+                if (page === 'home') {
+                    window.location.href = 'index.html';
+                } else if (page === 'about') {
+                    window.location.href = 'about.html';
+                } else if (page === 'projects') {
+                    // already here
+                } else if (page === 'contact') {
+                    window.location.href = 'contact.html';
+                }
+                if (navMenuEl.classList.contains('show')) navMenuEl.classList.remove('show');
+            });
+        });
+        
+        const logoHome = document.getElementById('logoHome');
+        if (logoHome) {
+            logoHome.addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+        
+        // Ensure filter buttons display correctly with new categories
+        // Also set initial display for all projects (flex)
+        projects.forEach(p => p.style.display = 'flex');
+        
+        // Fix for any missing images on initial load: show fallback properly
+        const allProjectImgs = document.querySelectorAll('.project-img');
+        allProjectImgs.forEach(img => {
+            img.addEventListener('error', function() {
+                const container = this.parentElement;
+                if (container && !container.querySelector('.img-fallback')) {
+                    const fallbackDiv = document.createElement('div');
+                    fallbackDiv.className = 'img-fallback';
+                    fallbackDiv.style.fontSize = '64px';
+                    fallbackDiv.style.display = 'flex';
+                    fallbackDiv.style.alignItems = 'center';
+                    fallbackDiv.style.justifyContent = 'center';
+                    fallbackDiv.style.height = '100%';
+                    fallbackDiv.style.width = '100%';
+                    fallbackDiv.innerHTML = '🎮';
+                    this.style.display = 'none';
+                    container.appendChild(fallbackDiv);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,932 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Olesego Marokwane | Game UI/UX Portfolio</title>
+    <style>
+        /* ============================================
+           RESET & BASE STYLES
+        ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0D0F1A;
+            color: #F0F0FF;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.25s ease, color 0.2s ease;
+        }
+
+        /* ============================================
+           NAVIGATION
+        ============================================ */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0D0F1A;
+            border-bottom: 2px solid #3DFFDC;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3DFFDC 0%, #FF44E6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-menu a {
+            color: #F0F0FF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover {
+            color: #3DFFDC;
+        }
+
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: #3DFFDC;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           HERO SECTION
+        ============================================ */
+        .hero {
+            text-align: center;
+            padding: 0px 0px 60px 0px;
+        }
+
+        .full-width-image-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #0D0F1A;
+            max-height: 280px;
+            line-height: 0;
+        }
+
+        .opening-game-image {
+            width: 100%;
+            height: auto;
+            max-height: 280px;
+            object-fit: cover;
+            object-position: center 30%;
+            display: block;
+            border: none;
+            border-bottom: 3px solid #3DFFDC;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (min-width: 1200px) {
+            .full-width-image-container { max-height: 320px; }
+            .opening-game-image { max-height: 320px; }
+        }
+
+        .hero-content {
+            padding: 60px 20px 0px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 52px;
+            margin-bottom: 20px;
+            color: #3DFFDC;
+            font-family: monospace;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ccccff;
+        }
+
+        /* ============================================
+           BUTTONS - GAME CONTROLLER STYLE
+        ============================================ */
+        .button-group {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 34px;
+            font-weight: bold;
+            font-size: 18px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            position: relative;
+            border-radius: 12px;
+            background: #1E1F2C;
+            border: none;
+            box-shadow: 0 8px 0 #0a0b12;
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: #3DFFDC;
+            color: #0D0F1A;
+            border-bottom: 3px solid #1e8f7a;
+            box-shadow: 0 8px 0 #1a6b5c;
+        }
+        .btn-primary:hover { background: #5effe3; transform: translateY(-5px); box-shadow: 0 11px 0 #1a6b5c; }
+        .btn-primary:active { transform: translateY(2px); box-shadow: 0 4px 0 #1a6b5c; }
+
+        .btn-secondary {
+            background: #FF44E6;
+            color: #0D0F1A;
+            border-bottom: 3px solid #b32b9e;
+            box-shadow: 0 8px 0 #8f1f7a;
+        }
+        .btn-secondary:hover { background: #ff5fec; transform: translateY(-5px); box-shadow: 0 11px 0 #8f1f7a; }
+        .btn-secondary:active { transform: translateY(2px); box-shadow: 0 4px 0 #8f1f7a; }
+
+        .btn::before { content: "▶"; font-size: 14px; transition: transform 0.1s; }
+        .btn-primary::before { content: "⏵"; font-weight: bold; }
+        .btn-secondary::before { content: "●"; font-size: 16px; }
+        .btn:hover::before { transform: translateX(3px); }
+
+        /* ============================================
+           COMMON SECTIONS
+        ============================================ */
+        .section {
+            padding: 60px 40px;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #3DFFDC;
+            font-family: monospace;
+        }
+
+        /* Featured Projects Grid */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .project-card {
+            background-color: #1E1F2C;
+            border-radius: 10px;
+            border: 2px solid #FF44E6;
+            text-align: center;
+            transition: transform 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .project-card:hover { transform: translateY(-5px); border-color: #3DFFDC; }
+        .project-card-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        .project-card-content { padding: 20px; }
+        .project-card h3 { color: #3DFFDC; margin-bottom: 10px; }
+        .project-card p { color: #ccccff; }
+
+        /* Skills Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .skill-badge {
+            background-color: #1E1F2C;
+            padding: 10px 25px;
+            border-radius: 25px;
+            border: 1px solid #3DFFDC;
+            transition: all 0.3s;
+        }
+        .skill-badge:hover { border-color: #FF44E6; transform: scale(1.05); }
+
+        /* ============================================
+           ABOUT PAGE STYLES
+        ============================================ */
+        .about-container {
+            max-width: 1100px;
+            margin: 50px auto 40px;
+            padding: 0 24px;
+        }
+        .about-card {
+            background-color: #1E1F2C;
+            border-radius: 32px;
+            border: 1px solid #3DFFDC40;
+            padding: 40px 42px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+        .profile-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 48px;
+            border-bottom: 1px dashed #3DFFDC30;
+            padding-bottom: 32px;
+        }
+        .profile-image {
+            flex-shrink: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3DFFDC;
+            box-shadow: 0 0 0 4px #0D0F1A, 0 0 0 7px #FF44E680;
+        }
+        .hero-intro { flex: 1; }
+        .hero-intro h1 {
+            font-size: 42px;
+            background: linear-gradient(130deg, #FFFFFF, #3DFFDC);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #FF44E6;
+            margin-bottom: 20px;
+            border-left: 3px solid #3DFFDC;
+            padding-left: 16px;
+        }
+        .intro-desc { font-size: 1rem; line-height: 1.5; opacity: 0.9; }
+        .about-container h2 {
+            color: #FF44E6;
+            margin: 36px 0 16px 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 4px solid #3DFFDC;
+            padding-left: 18px;
+        }
+        .about-container p { line-height: 1.65; margin-bottom: 18px; }
+        .about-container ul { margin-left: 24px; margin-bottom: 24px; }
+        .about-container li {
+            margin: 10px 0;
+            list-style-type: none;
+            position: relative;
+            padding-left: 24px;
+        }
+        .about-container li::before { content: "▹"; position: absolute; left: 0; color: #3DFFDC; }
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 16px;
+        }
+        .skill-list span {
+            background-color: #0D0F1A;
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid #3DFFDC;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* ============================================
+           PROJECTS PAGE
+        ============================================ */
+        .projects-header {
+            text-align: center;
+            padding: 60px 20px 20px 20px;
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+        .filter-btn {
+            background-color: #1E1F2C;
+            border: 2px solid #FF44E6;
+            color: #F0F0FF;
+            padding: 10px 25px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background-color: #FF44E6;
+            color: #0D0F1A;
+            transform: scale(1.02);
+        }
+        .projects-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .project-item {
+            background-color: #1E1F2C;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid #3DFFDC;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-item:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(61, 255, 220, 0.2); border-color: #FF44E6; }
+        .project-img-container {
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1c30, #0D0F1A);
+        }
+        .project-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        .project-item:hover .project-img { transform: scale(1.03); }
+        .project-info { padding: 25px; flex: 1; display: flex; flex-direction: column; }
+        .project-info h3 { font-size: 26px; margin-bottom: 10px; color: #3DFFDC; font-family: monospace; }
+        .project-category {
+            display: inline-block;
+            background-color: #FF44E6;
+            color: #0D0F1A;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 12px 0;
+            font-weight: bold;
+            align-self: flex-start;
+        }
+        .project-info p { line-height: 1.6; margin-top: 8px; margin-bottom: 20px; color: #ccccff; }
+        .view-detail {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            color: #3DFFDC;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 18px;
+            border: 1.5px solid #3DFFDC;
+            border-radius: 40px;
+            transition: all 0.2s;
+            width: fit-content;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .view-detail:hover { background-color: #3DFFDC; color: #0D0F1A; transform: translateX(5px); }
+
+        /* ============================================
+           MODAL
+        ============================================ */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 12, 21, 0.95);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background-color: #1E1F2C;
+            border: 2px solid #3DFFDC;
+            border-radius: 28px;
+            max-width: 1000px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 32px;
+            cursor: pointer;
+            color: #FF44E6;
+            background: none;
+            border: none;
+        }
+        .modal-close:hover { color: #3DFFDC; }
+        .modal-title { font-size: 32px; color: #3DFFDC; margin-bottom: 10px; font-family: monospace; }
+        .modal-category { background-color: #FF44E6; color: #0D0F1A; display: inline-block; padding: 4px 16px; border-radius: 30px; font-size: 13px; margin: 15px 0 20px; }
+        .modal-image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .modal-image {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid #3DFFDC;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #0D0F1A;
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            border-top: 1px solid #3DFFDC40;
+            margin-top: 50px;
+        }
+
+        /* ============================================
+           PAGE SECTIONS & LIGHT MODE
+        ============================================ */
+        .page-section { transition: opacity 0.2s ease; }
+        body.light-mode {
+            background-color: #F5F7FF;
+            color: #0A0C18;
+        }
+        body.light-mode nav { background-color: #F5F7FF; border-bottom-color: #FF44E6; }
+        body.light-mode .project-card,
+        body.light-mode .project-item,
+        body.light-mode .about-card { background-color: #FFFFFF; }
+        body.light-mode .skill-badge,
+        body.light-mode .skill-list span { background-color: #eef2ff; }
+        body.light-mode .project-info p { color: #2c2e42; }
+        body.light-mode .modal-content { background-color: #FFFFFF; }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #0D0F1A;
+                padding: 24px;
+                border-bottom: 2px solid #3DFFDC;
+                gap: 18px;
+                z-index: 99;
+            }
+            .nav-menu.show { display: flex; }
+            .menu-button { display: block; }
+            h1 { font-size: 36px; }
+            .section { padding: 40px 20px; }
+            .projects-grid-full { grid-template-columns: 1fr; padding: 15px; }
+            .about-card { padding: 28px 20px; }
+            .profile-row { flex-direction: column; text-align: center; }
+            .tagline { border-left: none; text-align: center; padding-left: 0; }
+            .project-card-image { height: 140px; }
+            .modal-image-gallery { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" id="logoHome">OM</div>
+        <div class="nav-menu" id="navMenu">
+            <a data-page="home">HOME</a>
+            <a data-page="about">ABOUT</a>
+            <a data-page="projects">PROJECTS</a>
+            <a data-page="contact">CONTACT</a>
+        </div>
+        <button class="menu-button" id="menuBtn">☰</button>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <section id="home-section" class="page-section">
+        <div class="hero">
+            <div class="full-width-image-container">
+                <img class="opening-game-image" id="gameOpeningImage" src="image.open.png" alt="Game Visual" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%221200%22%20height%3D%22300%22%20viewBox%3D%220%200%201200%20300%22%3E%3Crect%20width%3D%221200%22%20height%3D%22300%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22600%22%20y%3D%22160%22%20font-family%3D%22monospace%22%20font-size%3D%2220%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3EGAME%20VISUAL%3A%20image.open.png%3C%2Ftext%3E%3C%2Fsvg%3E';">
+            </div>
+            <div class="hero-content">
+                <h1>UI & UX<br>PORTFOLIO</h1>
+                <p class="subtitle">Game Interface Design • Visual Storytelling • User-Centred Solutions</p>
+                <div class="button-group">
+                    <a class="btn btn-primary" id="viewWorkButton">VIEW WORK</a>
+                    <a class="btn btn-secondary" id="contactMeButton">CONTACT ME</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURED PROJECTS -->
+        <div class="section">
+            <h2 class="section-title">FEATURED PROJECTS</h2>
+            <div class="project-grid">
+                <div class="project-card" data-project-category="game-menus">
+                    <img class="project-card-image" src="project.image.1.png" alt="Game Menus" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22180%22%20viewBox%3D%220%200%20400%20180%22%3E%3Crect%20width%3D%22400%22%20height%3D%22180%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.1.png%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                    <div class="project-card-content">
+                        <h3>Game Menus & Hub Design</h3>
+                        <p>Main menu, lobby hub, and settings with smooth transitions</p>
+                    </div>
+                </div>
+                <div class="project-card" data-project-category="onboarding">
+                    <img class="project-card-image" src="project.image.2.png" alt="Player Onboarding" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22180%22%20viewBox%3D%220%200%20400%20180%22%3E%3Crect%20width%3D%22400%22%20height%3D%22180%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.2.png%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                    <div class="project-card-content">
+                        <h3>Player Onboarding</h3>
+                        <p>Tutorial flows and first-time user experience for RPG</p>
+                    </div>
+                </div>
+                <div class="project-card" data-project-category="menu-heavy">
+                    <img class="project-card-image" src="project.image.3.png" alt="Menu-Heavy Systems" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22180%22%20viewBox%3D%220%200%20400%20180%22%3E%3Crect%20width%3D%22400%22%20height%3D%22180%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.3.png%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                    <div class="project-card-content">
+                        <h3>Menu-Heavy Systems</h3>
+                        <p>Inventory, skill trees, and deep navigation interfaces</p>
+                    </div>
+                </div>
+                <div class="project-card" data-project-category="interaction">
+                    <img class="project-card-image" src="project.image.4.png" alt="Interaction & Feedback" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22180%22%20viewBox%3D%220%200%20400%20180%22%3E%3Crect%20width%3D%22400%22%20height%3D%22180%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%2295%22%20font-family%3D%22monospace%22%20font-size%3D%2214%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.4.png%3C%2Ftext%3E%3C%2Fsvg%3E';">
+                    <div class="project-card-content">
+                        <h3>Interaction & Feedback</h3>
+                        <p>Button states, haptics, and visual feedback loops</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILLS SECTION -->
+        <div class="section">
+            <h2 class="section-title">SKILLS & TOOLS</h2>
+            <div class="skills-container">
+                <span class="skill-badge">UI Design</span>
+                <span class="skill-badge">UX Research</span>
+                <span class="skill-badge">Figma</span>
+                <span class="skill-badge">Prototyping</span>
+                <span class="skill-badge">HTML/CSS</span>
+                <span class="skill-badge">JavaScript</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about-section" class="page-section" style="display: none;">
+        <div class="about-container">
+            <div class="about-card">
+                <div class="profile-row">
+                    <img class="profile-image" src="WNTN9728.JPG" alt="Olesego Marokwane">
+                    <div class="hero-intro">
+                        <h1>Olesego Marokwane</h1>
+                        <div class="tagline">Game Designer & UI/UX Designer</div>
+                        <div class="intro-desc">I make game interfaces that look good and feel right. If it's easy to use and fun to play, I did my job.</div>
+                    </div>
+                </div>
+                <p>I'm a Game Designer and UI/UX Designer. I focus on game interface design and making sure players have a smooth experience. My work mixes classic game style with modern design.</p>
+                <h2>How I think about design</h2>
+                <p>Good design should guide you without needing instructions. Every button, color, and space should help the player know what to do next.</p>
+                <h2>What I've done</h2>
+                <ul><li>Designed game projects during my studies</li><li>Freelance UI/UX for indie game teams</li><li>Portfolio projects focused on game interfaces</li><li>Team collaborations to improve player experience</li></ul>
+                <h2>Tools I use</h2>
+                <div class="skill-list"><span>Figma</span><span>Adobe XD</span><span>Photoshop</span><span>VS Code</span><span>GitHub</span><span>Unity</span></div>
+                <h2>What I'm learning</h2>
+                <p>Improving JavaScript skills and user testing for game UI.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects-section" class="page-section" style="display: none;">
+        <div class="projects-header">
+            <h1>MY WORK</h1>
+            <p style="font-size: 18px;">Game interface design projects — from menus to feedback systems</p>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">ALL</button>
+            <button class="filter-btn" data-filter="game-menus">GAME MENUS & HUBS</button>
+            <button class="filter-btn" data-filter="onboarding">PLAYER ONBOARDING</button>
+            <button class="filter-btn" data-filter="menu-heavy">MENU-HEAVY SYSTEMS</button>
+            <button class="filter-btn" data-filter="interaction">INTERACTION & FEEDBACK</button>
+        </div>
+        <div class="projects-grid-full" id="projectsGridFull">
+            <div class="project-item" data-category="game-menus">
+                <div class="project-img-container"><img class="project-img" src="project.image.1.png" alt="Game Menus" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22240%22%20viewBox%3D%220%200%20600%20240%22%3E%3Crect%20width%3D%22600%22%20height%3D%22240%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22125%22%20font-family%3D%22monospace%22%20font-size%3D%2218%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.1.png%3C%2Ftext%3E%3C%2Fsvg%3E';"></div>
+                <div class="project-info"><h3>Game Menus & Hub Design</h3><span class="project-category">GAME MENUS & HUBS</span><p>Main menu, settings screen, and lobby hub with smooth transitions. Focused on intuitive navigation for fighting game genre.</p><button class="view-detail" data-project="1">CLICK FOR MORE →</button></div>
+            </div>
+            <div class="project-item" data-category="onboarding">
+                <div class="project-img-container"><img class="project-img" src="project.image.2.png" alt="Onboarding" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22240%22%20viewBox%3D%220%200%20600%20240%22%3E%3Crect%20width%3D%22600%22%20height%3D%22240%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22125%22%20font-family%3D%22monospace%22%20font-size%3D%2218%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.2.png%3C%2Ftext%3E%3C%2Fsvg%3E';"></div>
+                <div class="project-info"><h3>Player Onboarding</h3><span class="project-category">PLAYER ONBOARDING</span><p>Tutorial flow, interactive tips, and first-time user experience for mobile RPG. Teaches mechanics without breaking immersion.</p><button class="view-detail" data-project="2">CLICK FOR MORE →</button></div>
+            </div>
+            <div class="project-item" data-category="menu-heavy">
+                <div class="project-img-container"><img class="project-img" src="project.image.3.png" alt="Menu Heavy" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22240%22%20viewBox%3D%220%200%20600%20240%22%3E%3Crect%20width%3D%22600%22%20height%3D%22240%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22125%22%20font-family%3D%22monospace%22%20font-size%3D%2218%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.3.png%3C%2Ftext%3E%3C%2Fsvg%3E';"></div>
+                <div class="project-info"><h3>Menu-Heavy Systems</h3><span class="project-category">MENU-HEAVY SYSTEMS</span><p>Inventory, skill trees, and character customization screens. Designed for deep navigation with clear hierarchy.</p><button class="view-detail" data-project="3">CLICK FOR MORE →</button></div>
+            </div>
+            <div class="project-item" data-category="interaction">
+                <div class="project-img-container"><img class="project-img" src="project.image.4.png" alt="Interaction" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22600%22%20height%3D%22240%22%20viewBox%3D%220%200%20600%20240%22%3E%3Crect%20width%3D%22600%22%20height%3D%22240%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22300%22%20y%3D%22125%22%20font-family%3D%22monospace%22%20font-size%3D%2218%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3Eproject.image.4.png%3C%2Ftext%3E%3C%2Fsvg%3E';"></div>
+                <div class="project-info"><h3>Interaction & Feedback Systems</h3><span class="project-category">INTERACTION & FEEDBACK</span><p>Button states, haptic response, visual feedback loops, and audio cues that enhance player satisfaction.</p><button class="view-detail" data-project="4">CLICK FOR MORE →</button></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact-section" class="page-section" style="display: none;">
+        <div class="section">
+            <h2 class="section-title">CONTACT</h2>
+            <div style="max-width: 600px; margin: 0 auto; background-color: #1E1F2C; padding: 45px 40px; border-radius: 20px; border: 2px solid #FF44E6;">
+                <div style="margin-bottom: 30px;">
+                    <p style="margin-bottom: 8px; color: #FF44E6; font-size: 12px; letter-spacing: 1px;">EMAIL</p>
+                    <p style="color: #3DFFDC; font-size: 18px; font-weight: bold;"><a href="mailto:olesegom@icloud.com" style="color: #3DFFDC; text-decoration: none;">olesegom@icloud.com</a></p>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <p style="margin-bottom: 8px; color: #FF44E6; font-size: 12px; letter-spacing: 1px;">CELLPHONE</p>
+                    <p style="color: #3DFFDC; font-size: 18px; font-weight: bold;"><a href="tel:+27795648528" style="color: #3DFFDC; text-decoration: none;">079 564 8528</a></p>
+                </div>
+                <div style="margin-bottom: 40px;">
+                    <p style="margin-bottom: 8px; color: #FF44E6; font-size: 12px; letter-spacing: 1px;">INSTAGRAM</p>
+                    <p style="color: #3DFFDC; font-size: 18px; font-weight: bold;"><a href="https://instagram.com/olesegooooo" target="_blank" style="color: #3DFFDC; text-decoration: none;">olesegooooo</a></p>
+                </div>
+                <div class="button-group"><a class="btn btn-primary" id="backHomeButton">BACK TO HOME</a></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Olesego Marokwane | Game Designer & UI/UX Designer</p>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="projectModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModalBtn">X</button>
+            <div id="modalDynamicContent"></div>
+        </div>
+    </div>
+
+    <script>
+        /* ============================================
+           THEME TOGGLE (DARK / LIGHT MODE)
+        ============================================ */
+        const themeToggle = document.createElement('button');
+        themeToggle.innerHTML = 'DARK';
+        themeToggle.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#1E1F2C;border:2px solid #3DFFDC;border-radius:40px;width:auto;padding:10px 20px;font-size:14px;cursor:pointer;z-index:999;font-family:monospace;font-weight:bold;color:#3DFFDC;';
+        document.body.appendChild(themeToggle);
+        
+        let isDarkMode = true;
+        
+        function setTheme(isDark) {
+            if (!isDark) {
+                document.body.classList.add('light-mode');
+                document.body.style.backgroundColor = '#F5F7FF';
+                document.body.style.color = '#0A0C18';
+                document.querySelectorAll('.project-item, .project-card, .about-card').forEach(el => el.style.backgroundColor = '#FFFFFF');
+                themeToggle.innerHTML = 'LIGHT';
+                themeToggle.style.color = '#FF44E6';
+                themeToggle.style.borderColor = '#FF44E6';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.style.backgroundColor = '#0D0F1A';
+                document.body.style.color = '#F0F0FF';
+                document.querySelectorAll('.project-item, .project-card, .about-card').forEach(el => el.style.backgroundColor = '#1E1F2C');
+                themeToggle.innerHTML = 'DARK';
+                themeToggle.style.color = '#3DFFDC';
+                themeToggle.style.borderColor = '#3DFFDC';
+            }
+        }
+        
+        themeToggle.onclick = () => {
+            isDarkMode = !isDarkMode;
+            setTheme(isDarkMode);
+        };
+        setTheme(true);
+        
+        /* ============================================
+           MOBILE MENU
+        ============================================ */
+        const mobileMenuBtn = document.getElementById('menuBtn');
+        const navMenuElement = document.getElementById('navMenu');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.onclick = () => navMenuElement.classList.toggle('show');
+        }
+        
+        /* ============================================
+           PAGE NAVIGATION (SINGLE PAGE APP)
+        ============================================ */
+        const homeSection = document.getElementById('home-section');
+        const aboutSection = document.getElementById('about-section');
+        const projectsSection = document.getElementById('projects-section');
+        const contactSection = document.getElementById('contact-section');
+        const navLinkElements = document.querySelectorAll('.nav-menu a');
+        const logoElement = document.getElementById('logoHome');
+        const viewWork = document.getElementById('viewWorkButton');
+        const contactMe = document.getElementById('contactMeButton');
+        const backHome = document.getElementById('backHomeButton');
+        
+        function showHome() {
+            homeSection.style.display = 'block';
+            aboutSection.style.display = 'none';
+            projectsSection.style.display = 'none';
+            contactSection.style.display = 'none';
+        }
+        
+        function showAbout() {
+            homeSection.style.display = 'none';
+            aboutSection.style.display = 'block';
+            projectsSection.style.display = 'none';
+            contactSection.style.display = 'none';
+        }
+        
+        function showProjects() {
+            homeSection.style.display = 'none';
+            aboutSection.style.display = 'none';
+            projectsSection.style.display = 'block';
+            contactSection.style.display = 'none';
+        }
+        
+        function showContact() {
+            homeSection.style.display = 'none';
+            aboutSection.style.display = 'none';
+            projectsSection.style.display = 'none';
+            contactSection.style.display = 'block';
+        }
+        
+        navLinkElements.forEach(link => {
+            link.onclick = (e) => {
+                e.preventDefault();
+                const pageName = link.textContent.trim().toLowerCase();
+                if (pageName === 'home') showHome();
+                else if (pageName === 'about') showAbout();
+                else if (pageName === 'projects') showProjects();
+                else if (pageName === 'contact') showContact();
+                if (navMenuElement.classList.contains('show')) navMenuElement.classList.remove('show');
+            };
+        });
+        
+        if (logoElement) logoElement.onclick = showHome;
+        if (viewWork) viewWork.onclick = (e) => { e.preventDefault(); showProjects(); };
+        if (contactMe) contactMe.onclick = (e) => { e.preventDefault(); showContact(); };
+        if (backHome) backHome.onclick = (e) => { e.preventDefault(); showHome(); };
+        showHome();
+        
+        /* ============================================
+           PROJECT FILTERS
+        ============================================ */
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        filterButtons.forEach(btn => {
+            btn.onclick = () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filterValue = btn.dataset.filter;
+                projectItems.forEach(item => {
+                    if (filterValue === 'all' || item.dataset.category === filterValue) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            };
+        });
+        
+        /* ============================================
+           MODAL FOR PROJECT DETAILS
+        ============================================ */
+        const modalOverlay = document.getElementById('projectModal');
+        const modalContentArea = document.getElementById('modalDynamicContent');
+        const closeModal = document.getElementById('closeModalBtn');
+        
+        function buildImageList(baseName, count) {
+            const result = [];
+            for (let i = 1; i <= count; i++) {
+                const letter = String.fromCharCode(96 + i);
+                result.push(`${baseName}.${letter}.png`);
+            }
+            return result;
+        }
+        
+        const projectDetails = {
+            1: {
+                title: "Game Menus & Hub Design",
+                category: "GAME MENUS & HUBS",
+                desc: "Full redesign of a fighting game's main menu, character select screen, and post-match hub. Focused on reducing navigation steps and creating an energetic arcade atmosphere. Includes animated transitions and responsive layouts.",
+                images: buildImageList("project.detail.1", 6)
+            },
+            2: {
+                title: "Player Onboarding",
+                category: "PLAYER ONBOARDING",
+                desc: "First-time user experience for a mobile RPG. Designed interactive tutorials, tooltip systems, and progressive feature unlocking. The onboarding flow reduces drop-off rates by 25% in playtests.",
+                images: buildImageList("project.detail.2", 6)
+            },
+            3: {
+                title: "Menu-Heavy Systems",
+                category: "MENU-HEAVY SYSTEMS",
+                desc: "Complex inventory and skill tree interface for an open-world game. Designed nested categories, quick-equip slots, and search filters. Handles over 200 items with smooth scrolling.",
+                images: buildImageList("project.detail.3", 6)
+            },
+            4: {
+                title: "Interaction & Feedback Systems",
+                category: "INTERACTION & FEEDBACK",
+                desc: "Comprehensive feedback design for button presses, UI sounds, haptic patterns, and visual state changes. Includes micro-interactions and loading animations.",
+                images: buildImageList("project.detail.4", 6)
+            }
+        };
+        
+        function openModal(projectId) {
+            const data = projectDetails[projectId];
+            if (!data) return;
+            
+            let galleryHtml = '<div class="modal-image-gallery">';
+            data.images.forEach((imgSrc, idx) => {
+                galleryHtml += `<div><img class="modal-image" src="${imgSrc}" alt="${data.title} screenshot ${idx+1}" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22225%22%20viewBox%3D%220%200%20400%20225%22%3E%3Crect%20width%3D%22400%22%20height%3D%22225%22%20fill%3D%22%231E1F2C%22%2F%3E%3Ctext%20x%3D%22200%22%20y%3D%22115%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%20fill%3D%22%233DFFDC%22%20text-anchor%3D%22middle%22%3E${imgSrc}%3C%2Ftext%3E%3C%2Fsvg%3E';"></div>`;
+            });
+            galleryHtml += '</div>';
+            
+            const modalHtml = `
+                <h2 class="modal-title">${data.title}</h2>
+                <div class="modal-category">${data.category}</div>
+                <p class="modal-description">${data.desc}</p>
+                <h3 style="color:#3DFFDC; margin:20px 0 10px 0;">Project Gallery</h3>
+                ${galleryHtml}
+                <p style="margin-top:20px; font-size:14px; opacity:0.8;">Full case study available on request.</p>
+            `;
+            modalContentArea.innerHTML = modalHtml;
+            modalOverlay.classList.add('active');
+        }
+        
+        document.querySelectorAll('.view-detail').forEach(btn => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+                const id = btn.getAttribute('data-project');
+                if (id) openModal(id);
+            };
+        });
+        
+        if (closeModal) closeModal.onclick = () => modalOverlay.classList.remove('active');
+        if (modalOverlay) modalOverlay.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.classList.remove('active'); };
+        
+        /* ============================================
+           FEATURED PROJECT CARDS - NAVIGATE TO PROJECTS
+        ============================================ */
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.onclick = () => {
+                showProjects();
+                const category = card.getAttribute('data-project-category');
+                if (category) {
+                    setTimeout(() => {
+                        filterButtons.forEach(btn => {
+                            if (btn.dataset.filter === category) {
+                                btn.click();
+                                btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        });
+                    }, 100);
+                }
+            };
+        });
+    </script>
+</body>
+</html>

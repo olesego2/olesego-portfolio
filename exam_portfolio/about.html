@@ -1,0 +1,355 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Olesego Marokwane</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0D0F1A;
+            color: #F0F0FF;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.25s ease, color 0.2s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0D0F1A;
+            border-bottom: 2px solid #3DFFDC;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3DFFDC 0%, #FF44E6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-menu a {
+            color: #F0F0FF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: #3DFFDC;
+        }
+
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: #3DFFDC;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .about-container {
+            max-width: 1100px;
+            margin: 50px auto 40px;
+            padding: 0 24px;
+        }
+
+        .about-card {
+            background-color: #1E1F2C;
+            border-radius: 32px;
+            border: 1px solid #3DFFDC40;
+            padding: 40px 42px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 48px;
+            border-bottom: 1px dashed #3DFFDC30;
+            padding-bottom: 32px;
+        }
+
+        .profile-image {
+            flex-shrink: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #3DFFDC;
+            box-shadow: 0 0 0 4px #0D0F1A, 0 0 0 7px #FF44E680;
+        }
+
+        .hero-intro {
+            flex: 1;
+        }
+
+        .hero-intro h1 {
+            font-size: 42px;
+            background: linear-gradient(130deg, #FFFFFF, #3DFFDC);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #FF44E6;
+            margin-bottom: 20px;
+            border-left: 3px solid #3DFFDC;
+            padding-left: 16px;
+        }
+
+        .intro-desc {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        h2 {
+            color: #FF44E6;
+            margin: 36px 0 16px 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 4px solid #3DFFDC;
+            padding-left: 18px;
+        }
+
+        p {
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 24px;
+        }
+
+        li {
+            margin: 10px 0;
+            list-style-type: none;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #3DFFDC;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .skill-list span {
+            background-color: #0D0F1A;
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid #3DFFDC;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: #3DFFDC;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            border-top: 1px solid #3DFFDC40;
+            margin-top: 50px;
+        }
+
+        .social-links a {
+            color: #3DFFDC;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        .social-links a:hover {
+            color: #FF44E6;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 16px 20px;
+            }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #0D0F1A;
+                padding: 24px;
+                border-bottom: 2px solid #3DFFDC;
+                gap: 18px;
+                z-index: 99;
+            }
+            .nav-menu.show {
+                display: flex;
+            }
+            .menu-button {
+                display: block;
+            }
+            .about-card {
+                padding: 28px 20px;
+            }
+            .profile-row {
+                flex-direction: column;
+                text-align: center;
+            }
+            .tagline {
+                border-left: none;
+                text-align: center;
+                padding-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">OM</div>
+    <div class="nav-menu" id="navMenu">
+        <a href="index.html">HOME</a>
+        <a href="about.html">ABOUT</a>
+        <a href="projects.html">PROJECTS</a>
+        <a href="contact.html">CONTACT</a>
+    </div>
+    <button class="menu-button" id="menuBtn">☰</button>
+</nav>
+
+<div class="about-container">
+    <div class="about-card">
+        <div class="profile-row">
+            <img class="profile-image" src="WNTN9728.JPG" alt="Olesego Marokwane">
+            <div class="hero-intro">
+                <h1>Olesego Marokwane</h1>
+                <div class="tagline">Game Designer & UI/UX Designer</div>
+                <div class="intro-desc">
+                    I make game interfaces that look good and feel right. If it's easy to use and fun to play, I did my job.
+                </div>
+            </div>
+        </div>
+
+        <p>I'm a Game Designer and UI/UX Designer. I focus on game interface design and making sure players have a smooth experience. My work mixes classic game style with modern design. If it feels good to play and easy to understand, I've done my job.</p>
+
+        <h2>How I think about design</h2>
+        <p>Good design should guide you without needing instructions. Every button, color, and space should help the player know what to do next. I make interfaces that feel natural but still look unique. I don't just want things to be clean — I want them to be memorable.</p>
+
+        <h2>What I've done</h2>
+        <ul>
+            <li>Designed game projects during my studies</li>
+            <li>Did freelance UI/UX work for small indie game teams</li>
+            <li>Built portfolio projects focused on game interfaces</li>
+            <li>Worked with teams to improve player experience</li>
+        </ul>
+
+        <h2>Tools I use</h2>
+        <div class="skill-list">
+            <span>Figma</span>
+            <span>Adobe XD</span>
+            <span>Photoshop</span>
+            <span>VS Code</span>
+            <span>GitHub</span>
+            <span>Unity</span>
+        </div>
+
+        <h2>What I'm learning</h2>
+        <p>Right now I'm improving my JavaScript skills and learning more about user testing for game UI. I want to make sure my designs work well for real players on any device.</p>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 Olesego Marokwane | Game Designer & UI/UX Designer</p>
+    <div class="social-links">
+        <a href="#">LinkedIn</a>
+        <a href="#">GitHub</a>
+    </div>
+</footer>
+
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (menuBtn) {
+        menuBtn.addEventListener('click', function() {
+            navMenu.classList.toggle('show');
+        });
+    }
+
+    const themeBtn = document.createElement('button');
+    themeBtn.innerHTML = '🌙';
+    themeBtn.style.cssText = `
+        position:fixed;
+        bottom:22px;
+        right:22px;
+        background:#1E1F2C;
+        border:2px solid #3DFFDC;
+        border-radius:50%;
+        width:52px;
+        height:52px;
+        font-size:26px;
+        cursor:pointer;
+        z-index:999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+    document.body.appendChild(themeBtn);
+    
+    let darkMode = true;
+    const aboutCard = document.querySelector('.about-card');
+    const navBar = document.querySelector('nav');
+    
+    themeBtn.addEventListener('click', function() {
+        if (darkMode) {
+            document.body.style.backgroundColor = '#F5F7FF';
+            document.body.style.color = '#0A0C18';
+            aboutCard.style.backgroundColor = '#FFFFFF';
+            navBar.style.backgroundColor = '#F5F7FF';
+            navBar.style.borderBottomColor = '#FF44E6';
+            themeBtn.innerHTML = '☀️';
+            darkMode = false;
+        } else {
+            document.body.style.backgroundColor = '#0D0F1A';
+            document.body.style.color = '#F0F0FF';
+            aboutCard.style.backgroundColor = '#1E1F2C';
+            navBar.style.backgroundColor = '#0D0F1A';
+            navBar.style.borderBottomColor = '#3DFFDC';
+            themeBtn.innerHTML = '🌙';
+            darkMode = true;
+        }
+    });
+</script>
+</body>
+</html>

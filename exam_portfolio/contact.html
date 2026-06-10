@@ -1,0 +1,348 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Olesego Marokwane</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0D0F1A;
+            color: #F0F0FF;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            transition: background-color 0.25s ease, color 0.2s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #0D0F1A;
+            border-bottom: 2px solid #3DFFDC;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3DFFDC 0%, #FF44E6 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-menu a {
+            color: #F0F0FF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        
+        .nav-menu a:hover {
+            color: #3DFFDC;
+        }
+        
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: #3DFFDC;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        
+        .contact-container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .contact-card {
+            background-color: #1E1F2C;
+            padding: 50px 40px;
+            border-radius: 20px;
+            border: 2px solid #FF44E6;
+            text-align: center;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 48px;
+            color: #3DFFDC;
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: monospace;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #ccccff;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        
+        .contact-details {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(61, 255, 220, 0.2);
+            transition: transform 0.2s;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(8px);
+            border-bottom-color: #FF44E6;
+        }
+        
+        .contact-icon {
+            font-size: 24px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+            color: #3DFFDC;
+            font-family: monospace;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-label {
+            font-size: 12px;
+            color: #FF44E6;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .contact-value {
+            font-size: 18px;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        .contact-value a {
+            color: #3DFFDC;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        
+        .contact-value a:hover {
+            color: #FF44E6;
+            text-decoration: underline;
+        }
+        
+        .contact-note {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(61, 255, 220, 0.3);
+            font-size: 14px;
+            color: #8888aa;
+            text-align: center;
+        }
+        
+        .back-home-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 28px;
+            background: transparent;
+            border: 2px solid #3DFFDC;
+            color: #3DFFDC;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 40px;
+            transition: all 0.2s;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: monospace;
+        }
+        
+        .back-home-btn:hover {
+            background-color: #3DFFDC;
+            color: #0D0F1A;
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            border-top: 1px solid #3DFFDC40;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            nav { padding: 16px 20px; }
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #0D0F1A;
+                padding: 24px;
+                border-bottom: 2px solid #3DFFDC;
+                gap: 18px;
+                z-index: 99;
+            }
+            .nav-menu.show { display: flex; }
+            .menu-button { display: block; }
+            .contact-card { padding: 30px 25px; }
+            h1 { font-size: 36px; }
+            .contact-icon { font-size: 18px; min-width: 45px; }
+            .contact-value { font-size: 14px; }
+        }
+        
+        body.light-mode {
+            background-color: #F5F7FF;
+            color: #0A0C18;
+        }
+        body.light-mode nav {
+            background-color: #F5F7FF;
+            border-bottom-color: #FF44E6;
+        }
+        body.light-mode .contact-card {
+            background-color: #FFFFFF;
+        }
+        body.light-mode .contact-value a {
+            color: #0a6b5e;
+        }
+        body.light-mode .contact-note {
+            color: #666;
+        }
+        body.light-mode .contact-icon {
+            color: #0a6b5e;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo" id="logoHome">OM</div>
+        <div class="nav-menu" id="navMenu">
+            <a href="index.html">HOME</a>
+            <a href="about.html">ABOUT</a>
+            <a href="projects.html">PROJECTS</a>
+            <a href="contact.html">CONTACT</a>
+        </div>
+        <button class="menu-button" id="menuBtn">☰</button>
+    </nav>
+
+    <div class="contact-container">
+        <div class="contact-card">
+            <h1>GET IN TOUCH</h1>
+            <div class="subtitle">Let's connect — open for collaborations and game UI projects</div>
+            
+            <div class="contact-details">
+                <div class="contact-item">
+                    <div class="contact-icon">EMAIL</div>
+                    <div class="contact-info">
+                        <div class="contact-label">EMAIL</div>
+                        <div class="contact-value">
+                            <a href="mailto:olesegom@icloud.com">olesegom@icloud.com</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">PHONE</div>
+                    <div class="contact-info">
+                        <div class="contact-label">CELLPHONE</div>
+                        <div class="contact-value">
+                            <a href="tel:+27795648528">079 564 8528</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-item">
+                    <div class="contact-icon">SOCIAL</div>
+                    <div class="contact-info">
+                        <div class="contact-label">INSTAGRAM</div>
+                        <div class="contact-value">
+                            <a href="https://instagram.com/olesegooooo" target="_blank">olesegooooo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-note">
+                Available for freelance, collaborations, and game UI/UX projects
+            </div>
+            
+            <a href="index.html" class="back-home-btn">BACK TO HOME</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Olesego Marokwane | Game Designer & UI/UX Designer</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                navMenu.classList.toggle('show');
+            });
+        }
+        
+        const themeBtn = document.createElement('button');
+        themeBtn.innerHTML = 'DARK';
+        themeBtn.style.cssText = 'position:fixed;bottom:22px;right:22px;background:#1E1F2C;border:2px solid #3DFFDC;border-radius:40px;width:auto;padding:10px 20px;height:auto;font-size:14px;cursor:pointer;z-index:999;display:flex;align-items:center;justify-content:center;font-family:monospace;font-weight:bold;color:#3DFFDC;';
+        document.body.appendChild(themeBtn);
+        
+        let darkMode = true;
+        function applyTheme(isDark) {
+            if(!isDark){
+                document.body.classList.add('light-mode');
+                document.body.style.backgroundColor = '#F5F7FF';
+                document.body.style.color = '#0A0C18';
+                const contactCard = document.querySelector('.contact-card');
+                if(contactCard) contactCard.style.backgroundColor = '#FFFFFF';
+                themeBtn.innerHTML = 'LIGHT';
+                themeBtn.style.color = '#FF44E6';
+                themeBtn.style.borderColor = '#FF44E6';
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.style.backgroundColor = '#0D0F1A';
+                document.body.style.color = '#F0F0FF';
+                const contactCard = document.querySelector('.contact-card');
+                if(contactCard) contactCard.style.backgroundColor = '#1E1F2C';
+                themeBtn.innerHTML = 'DARK';
+                themeBtn.style.color = '#3DFFDC';
+                themeBtn.style.borderColor = '#3DFFDC';
+            }
+        }
+        themeBtn.onclick = () => { darkMode = !darkMode; applyTheme(darkMode); };
+        applyTheme(true);
+        
+        const logoHome = document.getElementById('logoHome');
+        if(logoHome) {
+            logoHome.addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>
